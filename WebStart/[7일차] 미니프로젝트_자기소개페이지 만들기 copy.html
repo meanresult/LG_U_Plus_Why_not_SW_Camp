@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>한지훈 포트폴리오</title>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #F1EFEA;
+      color: #504C47;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+    nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: 200px; height: 100%;
+      background: #D8D4CD;
+      padding-top: 40px;
+    }
+    nav a {
+      display: block;
+      color: #1E1E1E;
+      padding: 12px 20px;
+      text-decoration: none;
+    }
+    main {
+      margin-left: 200px;
+      width: calc(100% - 200px);
+    }
+    header {
+      background: #D8D4CD;
+      padding: 40px;
+      text-align: center;
+      border-bottom: 3px solid #504C47;
+    }
+    section {
+      padding: 30px;
+      border-bottom: 1px solid #ccc;
+    }
+    h2 {
+      border-left: 6px solid #504C47;
+      padding-left: 10px;
+      color: #1E1E1E;
+    }
+    .highlight {
+      background: #fff;
+      border-left: 4px solid #504C47;
+      padding: 15px;
+      margin-top: 10px;
+    }
+    .tag {
+      display: inline-block;
+      background: #D8D4CD;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin: 5px;
+    }
+    .comment-box {
+      background: #fff;
+      padding: 15px;
+      border: 1px solid #aaa;
+      border-radius: 8px;
+    }
+     #popup, .project-modal { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: rgba(0, 0, 0, 0.7); 
+      display: none; 
+      justify-content: center; 
+      align-items: center; 
+      z-index: 9999; }
+    
+    #popup-content { 
+      background: white; 
+      padding: 30px; 
+      border-radius: 12px; 
+      text-align: center; 
+      max-width: 600px; 
+      max-height: 90vh; 
+      overflow-y: auto; 
+    }
+    .modal-content { 
+      background: white;
+      padding: 0; 
+      border-radius: 12px; 
+      width: 90%; 
+      max-width: 1000px; 
+      height: 90%; 
+      overflow: hidden; 
+      position: relative; 
+    }
+    .modal-content iframe { 
+      width: 100%; 
+      height: 100%; 
+      border: none; }
+    .modal-close { 
+      position: absolute; 
+      top: 10px; 
+      right: 20px; 
+      background: #504C47; 
+      color: white; 
+      border: none; 
+      border-radius: 6px; 
+      padding: 5px 10px; 
+      cursor: pointer; 
+      z-index: 10; 
+    }
+    .gallery { 
+      display: flex; 
+      overflow-x: auto; 
+      gap: 20px; 
+      padding-bottom: 10px; }
+    .gallery-item { 
+      flex: 0 0 auto; 
+      position: relative; 
+      width: 300px; 
+      height: 200px; 
+      border-radius: 10px; 
+      overflow: hidden; 
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1); 
+      cursor: pointer; 
+    }
+    .gallery-item iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
+    .gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 10px; font-size: 14px; opacity: 0; transition: opacity 0.3s; 
+    }
+    .gallery-item:hover .gallery-caption { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- 랜덤 질문 팝업 -->
+  <div id="popup">
+    <div id="popup-content">
+      <h2 id="popup-question"></h2>
+      <p>관광 데이터를 통해 지역별 매출 패턴을 분석한 인사이트를 확인해보세요.</p>
+      <button onclick="document.getElementById('popup').style.display='none'">바로 보기</button>
+    </div>
+  </div>
+
+  <!-- 플로팅 프로젝트 모달 -->
+  <div id="projectModal" class="project-modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeProjectModal()">✕</button>
+      <iframe id="projectFrame" src=""></iframe>
+    </div>
+    <!-- 여기에 실제 프로젝트 내용을 추가하세요 -->
+    <p>이곳에 각 프로젝트의 상세 설명을 삽입합니다.</p>
+    <!-- 예: <img src="img/project1_detail.png" alt="프로젝트 상세 이미지"> -->
+  </div>
+
+  <nav>
+    <a href="#intro">02 자기소개</a>
+    <a href="#project">03 프로젝트</a>
+    <a href="#skills">04 기술 역량</a>
+    <a href="#content">05 콘텐츠 공유</a>
+    <a href="#contact">06 연락처</a>
+    <a href="#comments">07 댓글</a>
+  </nav>
+
+  <main>
+    <section id="intro">
+      <h2>01. 🙋‍♂️ 나를 소개합니다</h2>
+      <img src="img/한지훈님.jpg" alt="한지훈 소개 이미지" style="width:100%; max-width:300px;">
+      <div class="highlight">
+        서비스 기획을 하던 중, 데이터의 힘에 눈을 떴습니다.<br>
+        비전공자지만, 구조적으로 문제를 정의하고 데이터로 풀어나가는 데 흥미를 느낍니다.
+      </div>
+    </section>
+
+    <section id="project">
+      <h2>02. 📊 프로젝트 목록</h2>
+      <div class="gallery">
+        <div class="gallery-item" onclick="openProjectModal('project1.html')">
+          <iframe src="https://example.com/project1"></iframe>
+          <div class="gallery-caption">방문객 증가와 매출의 상관관계를 분석한 대시보드</div>
+        </div>
+        <div class="gallery-item" onclick="openProjectModal()">
+          <iframe src="https://example.com/project2"></iframe>
+          <div class="gallery-caption">제주 지역별 유동인구 트렌드 시각화</div>
+        </div>
+        <div class="gallery-item" onclick="openProjectModal()">
+          <iframe src="https://example.com/project3"></iframe>
+          <div class="gallery-caption">계절별 관광객 구성 비율 분석</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2>03. 🛠 기술 스택</h2>
+      <span class="tag">Python</span>
+      <span class="tag">Pandas</span>
+      <span class="tag">Seaborn</span>
+      <span class="tag">SQL</span>
+      <span class="tag">Tableau</span>
+      <p><strong>숙련도:</strong></p>
+      <progress value="70" max="100"></progress> Python<br>
+      <progress value="60" max="100"></progress> SQL<br>
+      <progress value="50" max="100"></progress> Tableau
+    </section>
+
+    <section id="content">
+      <h2>04. 📚 콘텐츠 공유</h2>
+      <ul>
+        <li><a href="#">Velog 글: 제주도 분석기</a></li>
+        <li><a href="#">YouTube: 분석 과정 요약 영상</a></li>
+        <li><a href="#">GitHub Repo: 분석 코드</a></li>
+      </ul>
+    </section>
+
+    <section id="contact">
+      <h2>05. 📮 연락처</h2>
+      <p>Email: your.email@example.com</p>
+      <p>GitHub: <a href="#">github.com/yourgithub</a></p>
+      <p>Velog: <a href="#">velog.io/@yourvelog</a></p>
+    </section>
+
+    <section id="comments">
+      <h2>06. 💬 문의 / 댓글 남기기</h2>
+      <div class="comment-box">
+        <label for="comment">댓글:</label><br />
+        <textarea id="comment" rows="4" style="width: 100%;"></textarea><br />
+        <button>댓글 남기기</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // 랜덤 팝업 질문
+    const questions = ['왜 제주도의 매출이 기대보다 낮았을까?'];
+    document.getElementById("popup-question").innerText = questions[0];
+    document.getElementById("popup").style.display = 'flex';
+  
+    // 프로젝트 상세 모달 제어
+    function openProjectByIndex() {
+      openProjectModal('project1.html');
+      document.getElementById("popup").style.display = 'none';
+    }
+
+    function openProjectModal(file) {
+      document.getElementById("projectFrame").src = file;
+      document.getElementById("projectModal").style.display = 'flex';
+    }
+
+    function closeProjectModal() {
+      document.getElementById("projectModal").style.display = 'none';
+      document.getElementById("projectFrame").src = "";
+    }
+  </script>
+</body>s
+</html>

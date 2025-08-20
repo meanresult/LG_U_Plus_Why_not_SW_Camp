@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>데이터 분석 프로젝트 포트폴리오</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    nav {
+      width: 240px;
+      background-color: #2c3e50;
+      padding: 20px;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+    }
+
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    nav ul li {
+      margin-bottom: 15px;
+    }
+
+    nav ul li a {
+      color: #ecf0f1;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      flex-grow: 1;
+    }
+
+    section {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h1, h2 {
+      color: #2c3e50;
+    }
+
+    pre {
+      background: #f0f0f0;
+      padding: 12px;
+      overflow-x: auto;
+      border-left: 4px solid #3498db;
+    }
+
+    .image-box {
+      margin-top: 10px;
+    }
+
+    .image-box img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <!-- 왼쪽 네비게이션 영역 -->
+  <nav>
+    <ul>
+      <li><a href="#hero">01. 히어로</a></li>
+      <li><a href="#title">02. 프로젝트 제목</a></li>
+      <li><a href="#overview">03. 개요</a></li>
+      <li><a href="#tools">04. 도구 및 기법</a></li>
+      <li><a href="#data">05. 사용 데이터</a></li>
+      <li><a href="#process">06. 분석 과정</a></li>
+      <li><a href="#result">07. 주요 결과</a></li>
+      <li><a href="#role">08. 역할</a></li>
+      <li><a href="#review">09. 느낀 점</a></li>
+      <li><a href="#idea">10. 확장 아이디어</a></li>
+    </ul>
+  </nav>
+
+  <!-- 오른쪽 본문 콘텐츠 -->
+  <main>
+    <section id="hero">
+      <h1>01. 이 프로젝트는 문제를 이렇게 해결했어요!</h1>
+      <p>소상공인의 매출 데이터를 분석하여 생존 전략을 시각화하다</p>
+      <div class="image-box">
+        <img src="img/example_chart1.jpg" alt="대표 시각화 이미지">
+      </div>
+    </section>
+
+    <section id="title">
+      <h2>02. 프로젝트 제목</h2>
+      <p>소상공인 생존 분석: 지역별 매출 데이터를 통한 인사이트 도출</p>
+    </section>
+
+    <section id="overview">
+      <h2>03. 개요</h2>
+      <p>이 프로젝트는 코로나 이후 소상공인의 매출 변화를 분석하고, 생존 전략을 데이터로 도출하기 위한 목적으로 수행되었습니다.</p>
+      <div class="image-box">
+        <img src="img/news_capture.jpg" alt="뉴스 배경 이미지">
+      </div>
+    </section>
+
+    <section id="tools">
+      <h2>04. 사용 도구 및 기법</h2>
+      <ul>
+        <li>Python: 데이터 분석 및 시각화</li>
+        <li>Pandas, Seaborn, Matplotlib</li>
+        <li>Google Colab, Excel, Tableau</li>
+      </ul>
+      <div class="image-box">
+        <img src="img/tools_logos.jpg" alt="사용 툴 로고">
+      </div>
+      <pre><code># 라이브러리 임포트
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt</code></pre>
+    </section>
+
+    <section id="data">
+      <h2>05. 사용 데이터</h2>
+      <p>출처: 공공데이터포털<br>컬럼: 지역, 업종, 매출액, 날짜 등</p>
+      <pre><code># 데이터 불러오기
+sales_df = pd.read_csv("sales_data.csv")
+sales_df.head()</code></pre>
+      <div class="image-box">
+        <img src="img/data_sample.jpg" alt="데이터 요약 예시">
+      </div>
+    </section>
+
+    <section id="process">
+      <h2>06. 분석 과정</h2>
+      <p>수집 → 정제 → 분석 → 시각화 순으로 진행했습니다.</p>
+      <pre><code># 결측치 제거
+sales_df.dropna(inplace=True)
+
+# 지역별 매출 시각화
+sns.barplot(data=sales_df, x='지역', y='매출')</code></pre>
+      <div class="image-box">
+        <img src="img/flow_chart.jpg" alt="분석 프로세스 흐름도">
+      </div>
+    </section>
+
+    <section id="result">
+      <h2>07. 주요 결과</h2>
+      <p>강남구는 매출 회복 속도가 빨랐으며, 소형 음식업종이 회복력이 높았다는 점을 확인했습니다.</p>
+      <pre><code># 월별 매출 추이 시각화
+plt.plot(sales_df['월'], sales_df['매출'])
+plt.title("월별 매출 변화")</code></pre>
+      <div class="image-box">
+        <img src="img/result_chart.jpg" alt="주요 결과 시각화">
+      </div>
+    </section>
+
+    <section id="role">
+      <h2>08. 내가 맡은 역할</h2>
+      <p>데이터 수집, 정제, 분석, 시각화 전 과정을 주도적으로 수행하였고 보고서 및 발표 자료를 직접 작성했습니다.</p>
+    </section>
+
+    <section id="review">
+      <h2>09. 느낀 점 / 한계</h2>
+      <p>실제 데이터를 다루며 실무 경험을 쌓을 수 있었고, 분석의 신뢰성을 확보하는 것이 중요하다는 점을 배웠습니다. 시계열 분석 기법의 미숙함이 아쉬웠습니다.</p>
+    </section>
+
+    <section id="idea">
+      <h2>10. 확장 아이디어</h2>
+      <p>날씨 데이터를 추가 분석하여 매출 예측 모델(Machine Learning)을 구성하고 싶습니다.</p>
+      <pre><code># 예측 모델 구성을 위한 초안 코드
+from sklearn.linear_model import LinearRegression</code></pre>
+    </section>
+  </main>
+</body>
+</html>
