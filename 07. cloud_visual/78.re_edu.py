@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 import io
 import seaborn as sns 
+import re 
 
 file = st.file_uploader(
     '파일선택'
@@ -81,46 +82,42 @@ if option is not None:
     y_options = dt1.select_dtypes(include=['int64','float64','object']).columns #y는 연속형
     hue_options = dt1.select_dtypes(include=['object','bool']).columns # 불리언 또는 범주형
     plotly_charts = [
-    # 기본 차트
-    "Scatter Plot (산점도)",
-    "Line Chart (선 그래프)",
-    "Bar Chart (막대 그래프)",
-    "Histogram (히스토그램)",
-    "Box Plot (박스 플롯)",
-    "Violin Plot (바이올린 플롯)",
-    "Area Chart (영역 차트)",
-    "Pie Chart (파이 차트)",
-    "Donut Chart (도넛 차트)",
-    "Funnel Chart (퍼널 차트)",
-    "Bullet Chart (불릿 차트)",
+        # 기본 차트
+        "scatter (산점도)",
+        "line (선 그래프)",
+        "bar (막대 그래프)",
+        "histogram (히스토그램)",
+        "box (박스 플롯)",
+        "violin (바이올린 플롯)",
+        "area (영역 차트)",
+        "pie (파이 차트)",
+        "funnel (퍼널 차트)",
+        "funnel_area (퍼널 영역 차트)",
+        "sunburst (선버스트 차트)",
 
-    # 시계열 / 통계
-    "Time Series Line Chart (시계열 선 그래프)",
-    "Stacked Area Chart (누적 영역 차트)",
-    "Stacked Bar Chart (누적 막대 그래프)",
-    "Density Heatmap (밀도 히트맵)",
-    "2D Histogram (2차원 히스토그램)",
-    "2D Density Contour (밀도 등고선)",
+        # 시계열 / 통계
+        "density_heatmap (밀도 히트맵)",
+        "density_contour (밀도 등고선)",
+        "ecdf (누적 분포 함수)",
+        "imshow (이미지/히트맵)",
+        "parallel_coordinates (평행 좌표 플롯)",
+        "parallel_categories (평행 카테고리 플롯)",
 
-    # 분포 관련
-    "ECDF Plot (누적 분포 함수)",
-    "KDE Plot (커널 밀도 추정)",
-    "Sunburst Chart (선버스트 차트)",
-    "Treemap (트리맵)",
-    "Icicle Chart (아이시클 차트)",
+        # 분포 / 계층
+        "treemap (트리맵)",
+        "icicle (아이시클 차트)",
+        "strip (스트립 플롯)",
+        "timeline (타임라인)",
+        "scatter_matrix (산점도 행렬)",
 
-    # 지도 시각화
-    "Choropleth Map (지역별 색상 지도)",
-    "Scatter Mapbox (위치 산점도 지도)",
-    "Bubble Map (버블 지도)",
-    "Density Mapbox (밀도 지도)",
-    "Geo Scatter Plot (위도/경도 산점도)",
-
-    # 고급 차트
-    "3D Scatter Plot (3차원 산점도)",
-    "3D Surface Plot (3D 표면 그래프)",
-    "3D Line Plot (3차원 선 그래프)",
-    "3D Mesh Plot (3D 메쉬 그래프)"
+        # 지도 시각화
+        "choropleth (지역별 색상 지도)",
+        "choropleth_mapbox (Mapbox 지역별 지도)",
+        "scatter_geo (지리 산점도)",
+        "scatter_mapbox (Mapbox 산점도)",
+        "density_mapbox (Mapbox 밀도 지도)",
+        "line_geo (지리 선 그래프)",
+        "line_mapbox (Mapbox 선 그래프)"
     ]
     
     print('*'*30)
@@ -154,15 +151,21 @@ if option is not None:
         ,index = None
         ,placeholder = '차트를 선택해주세요' 
     )
+
+    #선택한 차트 뒷 설명 제거
+    if select_plotly is not None:
+        re_chart = re.sub(r"\s*\(.*?\)", "",select_plotly)
+ 
+        chart_func = getattr(px, re_chart) # 텍스트를 함수로 변환 
     
-    pl = select_plotly
-    # 위젯을 활용한 interactive 그래프 표현
-    fig = px.select_plotly(
-        data_frame=dt1
-        ,x=ax_x
-        ,y=ax_y
-        ,color = ax_hue
-        ,width= 500
-        ,height= 500
-    )
-    st.plotly_chart(fig)
+        # 위젯을 활용한 interactive 그래프 표현
+        if chart_func is not None:
+            fig = chart_func(
+                data_frame=dt1
+                ,x=ax_xss
+                ,y=ax_y
+                ,color = ax_hue
+                ,width= 500
+                ,height= 500
+            )
+            st.plotly_chart(fig)
