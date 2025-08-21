@@ -1,0 +1,7 @@
+streamlit
+pandas
+plotly.expres
+io
+seaborn
+re 
+

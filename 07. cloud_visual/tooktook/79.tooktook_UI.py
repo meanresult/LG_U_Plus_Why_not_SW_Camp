@@ -1,5 +1,5 @@
 import streamlit as st
-from PIL import Image
+
 
 USER_DATA = {
     "admin": "1234",
